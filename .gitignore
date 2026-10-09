@@ -1,0 +1,9 @@
+# Large raw crash downloads (~470 MB) are re-created by the notebook (section 0.1)
+data/raw/crashes_raw.csv
+data/raw/crash_years/
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+venv/
+*.pyc
+.DS_Store

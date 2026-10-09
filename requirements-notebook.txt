@@ -1,0 +1,8 @@
+# Everything needed to re-run the notebook (on top of requirements.txt)
+-r requirements.txt
+matplotlib>=3.9
+seaborn>=0.13
+scipy>=1.13
+scikit-learn>=1.5
+jupyter>=1.0
+ipykernel>=6.29

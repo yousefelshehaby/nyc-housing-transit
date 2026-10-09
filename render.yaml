@@ -1,0 +1,11 @@
+# One-click deploy on Render: New + > Blueprint > select this repository
+services:
+  - type: web
+    name: nyc-housing-traffic
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:server --workers 1 --threads 4 --timeout 120 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
