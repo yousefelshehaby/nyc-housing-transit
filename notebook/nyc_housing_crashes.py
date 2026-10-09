@@ -24,17 +24,16 @@
 # | **Geographic helper (not a third domain dataset)** | [Modified ZIP Code Tabulation Areas (MODZCTA)](https://data.cityofnewyork.us/Health/Modified-Zip-Code-Tabulation-Areas-MODZCTA-/pri4-ifjk) — id `pri4-ifjk`: ZIP boundaries + population, used only as the spatial "glue" and per-capita denominator |
 #
 # ### Team & contributions
-# > Replace the placeholders with real names / IDs before submission. Each member owns **2 research questions + 2 visualizations**
-# > plus one engineering task. The same split is repeated in the `README.md`.
+# Team of 5 (tutorial group P003) → 10 required research questions (2 per member); RQ11 and RQ12 are **additional** team questions.
 #
 # | Member | ID | Research questions & visualizations | Engineering / cleaning / website work |
 # |---|---|---|---|
-# | Member 1 | `ID-1` | RQ1 (scatter), RQ2 (bar) | Data loading & caching, dataset overview, housing EDA |
-# | Member 2 | `ID-2` | RQ3 (event-study line), RQ4 (map) | Housing pre-integration cleaning (dates, units, confidential records, IQR) |
-# | Member 3 | `ID-3` | RQ5 (dual-axis line), RQ6 (heatmap) | Crash pre-integration cleaning (dates, coordinates, ZIPs, injury consistency, outliers) |
-# | Member 4 | `ID-4` | RQ7 (diverging bar), RQ8 (box plot) | Contributing-factor & vehicle-type standardization |
-# | Member 5 | `ID-5` | RQ9 (multi-line), RQ10 (stacked bar) | Integration: point-in-polygon spatial join, ZIP × year panel, 250 m proximity join |
-# | Member 6 | `ID-6` | RQ11 (correlation heatmap), RQ12 (grouped bar) | Post-integration cleaning, export for the website, Dash website & deployment |
+# | Nada Adel Shawki Othman | 16007138 | RQ1 (scatter), RQ2 (bar) | Data loading & caching, dataset overview, housing EDA |
+# | Saged Mohamed Atef Mohamed Hegazy Badr | 16008234 | RQ3 (event-study line), RQ4 (map) | Housing pre-integration cleaning (dates, units, confidential records, IQR) |
+# | Youssef Mohamed Ahmed Sobhy Abdelhamed Elhawary | 16006726 | RQ5 (dual-axis line), RQ6 (heatmap) | Crash pre-integration cleaning (dates, coordinates, ZIPs, injury consistency, outliers) |
+# | Youssef Mohamed Yehia Amin Ibrahim Elshehabi | 13005381 | RQ7 (diverging bar), RQ8 (box plot) | Contributing-factor & vehicle-type standardization; Dash website & deployment |
+# | Zeyad Mahmoud Ahmed Abdelhakeem Galal | 16005534 | RQ9 (multi-line), RQ10 (stacked bar) | Integration (spatial join, ZIP × year panel, 250 m proximity join), post-integration cleaning, export |
+# | Whole team (additional) | — | RQ11 (correlation heatmap), RQ12 (grouped bar) | Story, README, final review |
 #
 # ### The question
 # New York builds and preserves thousands of affordable homes every year. Those homes are meant to give low-income
@@ -860,7 +859,7 @@ CITY_INJ_RATE = np.average(zip_summary["injured_per_10k_yr"], weights=weights)
 print(f"Population-weighted citywide: {CITY_INJ_RATE:.1f} injuries and {CITY_PED_RATE:.1f} pedestrian injuries per 10k residents per year")
 
 # %% [markdown]
-# ### RQ1 (Member 1) — Do the ZIPs that absorbed the most affordable housing also carry the highest traffic-injury burden?
+# ### RQ1 (Nada Othman) — Do the ZIPs that absorbed the most affordable housing also carry the highest traffic-injury burden?
 # *Why it matters:* if affordable units are concentrated where injury rates are high, the city is (unintentionally) asking its
 # lowest-income residents to accept the most dangerous streets.
 
@@ -897,7 +896,7 @@ rq1.round(3)
 # through-traffic, so "injuries per resident" is an exposure index, not the residents' own injury risk.
 
 # %% [markdown]
-# ### RQ2 (Member 1) — Are the *deepest* affordability tiers placed in more dangerous neighbourhoods than middle-income units?
+# ### RQ2 (Nada Othman) — Are the *deepest* affordability tiers placed in more dangerous neighbourhoods than middle-income units?
 # Each unit inherits the pedestrian-injury rate of its ZIP; we compare the unit-weighted average across AMI tiers.
 
 # %%
@@ -929,7 +928,7 @@ tier_exposure.round(2)
 # *where the city builds affordable housing in general*, not of one tier.
 
 # %% [markdown]
-# ### RQ3 (Member 2) — Do crashes around a building change after a *new* affordable building starts construction?
+# ### RQ3 (Saged Badr) — Do crashes around a building change after a *new* affordable building starts construction?
 # Event-study design: for each building we take crashes within 250 m in the 3 years before and after its start year.
 # To remove the citywide trend (COVID, Vision Zero) we divide by the citywide crash count of the same calendar year, then index
 # the pre-period (years −3…−1) to 100. **Preservation** buildings (already occupied) are the comparison group.
@@ -979,7 +978,7 @@ pd.concat(event_results, axis=1).round(1)
 # crash count is dominated by existing traffic, so a few hundred new residents are not visible in it.
 
 # %% [markdown]
-# ### RQ4 (Member 2) — Where do affordable buildings sit on the map of pedestrian & cyclist danger?
+# ### RQ4 (Saged Badr) — Where do affordable buildings sit on the map of pedestrian & cyclist danger?
 
 # %%
 def plot_zip_choropleth(ax, values: pd.Series, cmap: str = "Reds", vmax: float | None = None):
@@ -1023,7 +1022,7 @@ units_by_quartile.round(1)
 # many commuters, which inflates per-resident rates — so the quartiles measure street exposure, not residents' personal risk.
 
 # %% [markdown]
-# ### RQ5 (Member 3) — Do the housing pipeline and street danger move together over time?
+# ### RQ5 (Youssef Elhawary) — Do the housing pipeline and street danger move together over time?
 
 # %%
 monthly_crashes = crashes.set_index("crash_datetime").resample("MS").agg({"collision_id": "count", "ped_injured": "sum", "cyc_injured": "sum"})
@@ -1062,7 +1061,7 @@ yearly.round(0)
 # normalises by the citywide total.
 
 # %% [markdown]
-# ### RQ6 (Member 3) — *When* are the streets around affordable housing dangerous for pedestrians?
+# ### RQ6 (Youssef Elhawary) — *When* are the streets around affordable housing dangerous for pedestrians?
 # Hour × weekday distribution of pedestrian injuries within 250 m of affordable buildings, and how it differs from the rest of the city.
 
 # %%
@@ -1099,7 +1098,7 @@ print(f"Weekday school-run hours (7-9 h, 14-16 h) share: near housing {school_ho
 # lighting, slower signal timing — and not only peak hours.
 
 # %% [markdown]
-# ### RQ7 (Member 4) — Are the *causes* of injury crashes different on the streets around affordable housing?
+# ### RQ7 (Youssef Elshehabi) — Are the *causes* of injury crashes different on the streets around affordable housing?
 
 # %%
 injury_geo = geo_crashes[geo_crashes["is_injury_crash"]]
@@ -1131,7 +1130,7 @@ factor_share.round(2)
 # *Caveat:* "pedestrian error" is the officer's judgement and may partly reflect bias against the pedestrian.
 
 # %% [markdown]
-# ### RQ8 (Member 4) — Does doorstep crash exposure differ by borough and by construction type?
+# ### RQ8 (Youssef Elshehabi) — Does doorstep crash exposure differ by borough and by construction type?
 
 # %%
 fig, ax = plt.subplots(figsize=(12, 5.5))
@@ -1153,7 +1152,7 @@ rq8.round(2)
 # land and zoning capacity — often along wide, rezoned arterial corridors — which are exactly the high-traffic streets.
 
 # %% [markdown]
-# ### RQ9 (Member 5) — Did Vision-Zero-era safety gains reach the neighbourhoods where the city builds most?
+# ### RQ9 (Zeyad Galal) — Did Vision-Zero-era safety gains reach the neighbourhoods where the city builds most?
 # ZIPs are split into terciles by affordable units per 1,000 residents; we follow their injury rates year by year.
 
 # %%
@@ -1187,7 +1186,7 @@ pd.DataFrame({"2014–15": change[[2014, 2015]].mean(axis=1), "2024–25": chang
 # absorbing most of the new affordable housing.
 
 # %% [markdown]
-# ### RQ10 (Member 5) — Are *family-sized* affordable homes (2+ bedrooms, i.e. children) placed in the most dangerous ZIPs for pedestrians?
+# ### RQ10 (Zeyad Galal) — Are *family-sized* affordable homes (2+ bedrooms, i.e. children) placed in the most dangerous ZIPs for pedestrians?
 
 # %%
 ped_quartile = pd.qcut(zip_summary["ped_injured_per_10k_yr"], 4, labels=["Q1 safest", "Q2", "Q3", "Q4 most dangerous"])
@@ -1216,7 +1215,7 @@ rq10.round(1)
 # terms, more children in new affordable homes will grow up in the ZIPs with the highest pedestrian-injury rates.
 
 # %% [markdown]
-# ### RQ11 (Member 6) — How are housing-production and street-safety metrics related across ZIPs?
+# ### RQ11 (Team — additional) — How are housing-production and street-safety metrics related across ZIPs?
 # A Spearman correlation matrix over all residential ZIPs summarises every pairwise cross-domain relationship at once.
 
 # %%
@@ -1240,7 +1239,7 @@ plt.show()
 # unrelated to danger (|ρ| < 0.1), which confirms RQ2.
 
 # %% [markdown]
-# ### RQ12 (Member 6) — Are streets around affordable housing more exposed to heavy vehicles and two-wheelers?
+# ### RQ12 (Team — additional) — Are streets around affordable housing more exposed to heavy vehicles and two-wheelers?
 # Share of crashes involving at least one vehicle of each type (any of the 5 vehicle slots), near vs. away from affordable housing.
 
 # %%

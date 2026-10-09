@@ -121,16 +121,17 @@ The website is a standard Dash app (`app:server` is the WSGI entry point) and ne
 
 ## Team contributions
 
-> Replace names / IDs. Each member: 2 research questions + 2 visualizations + one engineering task.
+Team of 5 (tutorial group P003) → 10 required research questions (2 per member). RQ11 and RQ12 are **additional**
+questions the team analysed together.
 
 | Member | ID | Research questions & visualizations | Data / engineering / website work |
 |---|---|---|---|
-| Member 1 | ID-1 | **RQ1** ZIP scatter: units per 1k residents vs injuries · **RQ2** income-tier exposure bar | Data loading & caching (SODA API, per-year crash download), dataset overview, housing EDA |
-| Member 2 | ID-2 | **RQ3** event study around project start · **RQ4** choropleth map + buildings | Housing pre-integration cleaning (dates, structural zeros, confidential records, IQR flags) |
-| Member 3 | ID-3 | **RQ5** housing pipeline vs crashes time series · **RQ6** hour × weekday heatmap | Crash pre-integration cleaning (timestamps, invalid coordinates, ZIPs, injury reconciliation, outlier rule) |
-| Member 4 | ID-4 | **RQ7** contributing factors near vs elsewhere · **RQ8** doorstep exposure box plot | Contributing-factor & vehicle-type standardisation (regex rules) |
-| Member 5 | ID-5 | **RQ9** Vision-Zero trend by housing-growth tercile · **RQ10** family units by danger quartile | Integration: point-in-polygon spatial join, ZIP × year panel, 250 m BallTree proximity join |
-| Member 6 | ID-6 | **RQ11** Spearman correlation heatmap · **RQ12** vehicle-type mix near vs elsewhere | Post-integration cleaning, export for the website, Dash website, search parser, deployment |
+| Nada Adel Shawki Othman | 16007138 | **RQ1** ZIP scatter: units per 1k residents vs injuries · **RQ2** income-tier exposure bar | Data loading & caching (SODA API, per-year crash download), dataset overview, housing EDA |
+| Saged Mohamed Atef Mohamed Hegazy Badr | 16008234 | **RQ3** event study around project start · **RQ4** choropleth map + buildings | Housing pre-integration cleaning (dates, structural zeros, confidential records, IQR flags) |
+| Youssef Mohamed Ahmed Sobhy Abdelhamed Elhawary | 16006726 | **RQ5** housing pipeline vs crashes time series · **RQ6** hour × weekday heatmap | Crash pre-integration cleaning (timestamps, invalid coordinates, ZIPs, injury reconciliation, outlier rule) |
+| Youssef Mohamed Yehia Amin Ibrahim Elshehabi | 13005381 | **RQ7** contributing factors near vs elsewhere · **RQ8** doorstep exposure box plot | Contributing-factor & vehicle-type standardisation; Dash website, search parser, deployment (Vercel) |
+| Zeyad Mahmoud Ahmed Abdelhakeem Galal | 16005534 | **RQ9** Vision-Zero trend by housing-growth tercile · **RQ10** family units by danger quartile | Integration (point-in-polygon spatial join, ZIP × year panel, 250 m proximity join), post-integration cleaning, export for the website |
+| Whole team (additional) | — | **RQ11** Spearman correlation heatmap · **RQ12** vehicle-type mix near vs elsewhere | Story section, README, final review |
 
 ## AI assistance
 
