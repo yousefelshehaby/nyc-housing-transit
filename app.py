@@ -418,11 +418,12 @@ def story_section() -> html.Div:
     ])
 
 
-app = Dash(__name__, title="Living Next to the Traffic · NYC",
+dash_app = Dash(__name__, title="Living Next to the Traffic · NYC",
            external_stylesheets=["https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"])
-server = app.server
+server = dash_app.server
+app = server   # WSGI entrypoint: Vercel loads `app` from app.py, gunicorn uses `app:server`
 
-app.layout = html.Div(className="page", children=[
+dash_app.layout = html.Div(className="page", children=[
     html.Header(className="hero", children=[
         html.Div(className="hero-inner", children=[
             html.P("NYC Open Data · Housing & Development × Transportation · 2014–2025", className="eyebrow"),
@@ -497,7 +498,7 @@ app.layout = html.Div(className="page", children=[
 
 
 # ---------------------------------------------------------------- callbacks
-@app.callback(
+@dash_app.callback(
     Output("f-borough", "value"), Output("f-y0", "value"), Output("f-y1", "value"), Output("f-ctype", "value"),
     Output("f-tier", "value"), Output("f-victim", "value"), Output("f-factor", "value"), Output("f-prox", "value"),
     Output("search-feedback", "children"), Output("search-trigger", "data"),
@@ -524,7 +525,7 @@ def apply_search(_clicks, _submit, text):
     return (*values, [html.Span("Applied: ", className="muted"), *chips], {"query": text, "n": (_clicks or 0) + (_submit or 0)})
 
 
-@app.callback(
+@dash_app.callback(
     Output("kpis", "children"), Output("g-map", "figure"), Output("g-scatter", "figure"), Output("g-tiers", "figure"),
     Output("g-timeline", "figure"), Output("g-heatmap", "figure"), Output("g-factors", "figure"), Output("g-box", "figure"),
     Output("g-event", "figure"), Output("g-terciles", "figure"), Output("report-status", "children"),
@@ -589,4 +590,4 @@ def generate_report(_n, _search, boroughs, y0, y1, ctype, tier, victim, factors,
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0", port=8050)
+    dash_app.run(debug=False, host="0.0.0.0", port=8050)
