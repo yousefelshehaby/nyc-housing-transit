@@ -8,7 +8,7 @@
 
 | | |
 |---|---|
-| **Live website** | `https://<your-service>.onrender.com` ← paste the Render URL after deploying (see [Deployment](#deployment)) |
+| **Live website** | **https://nyc-housing-transit.vercel.app** (deployed on Vercel) |
 | **Notebook** | [`notebook/NYC_Housing_x_Crashes.ipynb`](notebook/NYC_Housing_x_Crashes.ipynb) (executed, with all outputs) |
 | **Housing dataset (H2)** | [Affordable Housing Production by Building](https://data.cityofnewyork.us/Housing-Development/Affordable-Housing-Production-by-Building/hg8x-zxpr) — `hg8x-zxpr` |
 | **Transportation dataset (T4)** | [Motor Vehicle Collisions – Crashes](https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95) — `h9gi-nx95` |
@@ -90,7 +90,12 @@ reflects the latest notebook run.
 
 The website is a standard Dash app (`app:server` is the WSGI entry point) and needs < 300 MB of RAM, so it runs on free tiers.
 
-**Render (recommended, free):**
+**Vercel (current deployment, free, no card):**
+1. On [vercel.com/new](https://vercel.com/new) import the GitHub repository — Vercel detects the Python app automatically
+   (`app.py` exposes `app`, the Flask server behind Dash; `vercel.json` excludes the notebook and raw data from the bundle).
+2. Click **Deploy**. Every push to `main` redeploys automatically.
+
+**Render (alternative, free plan but asks for card verification):**
 1. Push this folder to a GitHub repository (the folder itself must be the repo root, or set *Root Directory* in Render).
 2. On [render.com](https://render.com) → **New + → Blueprint** → select the repo. `render.yaml` configures everything:
    build `pip install -r requirements.txt`, start `gunicorn app:server`, Python 3.11.9.
